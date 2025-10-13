@@ -1,0 +1,10 @@
+UserSchema: 
+Check if id is created for every user. 
+If yes, then we can have course, which user pick/History module.
+
+ResourceSchema:
+
+
+HistorySchema:
+
+Backend Deadline: Maximum Tommorrow.

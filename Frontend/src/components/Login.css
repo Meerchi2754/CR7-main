@@ -1,0 +1,109 @@
+/* Login.css */
+
+/* Layout */
+.login-container {
+    @apply min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8;
+}
+
+.login-card {
+    @apply max-w-md w-full bg-white rounded-lg shadow-xl p-8;
+}
+
+/* Header */
+.login-header {
+    @apply text-center mb-8;
+}
+
+.login-title {
+    @apply text-3xl font-bold text-gray-900;
+}
+
+.login-subtitle {
+    @apply mt-2 text-gray-600;
+}
+
+/* Error box */
+.login-error {
+    @apply mb-6 bg-red-50 border border-red-200 rounded-md p-4 flex items-start gap-3;
+}
+
+.login-error-text {
+    @apply text-sm text-red-800;
+}
+
+/* Input fields */
+.login-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.login-input-wrapper {
+    @apply relative;
+}
+
+.login-input-icon {
+    @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
+}
+
+.login-input {
+    @apply block w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.login-input-error {
+    @apply border-red-300;
+}
+
+.login-input-normal {
+    @apply border-gray-300;
+}
+
+.login-eye-button {
+    @apply absolute inset-y-0 right-0 pr-3 flex items-center;
+}
+
+/* Error text */
+.login-error-message {
+    @apply mt-1 text-sm text-red-600;
+}
+
+/* Remember me and forgot password */
+.login-options {
+    @apply flex items-center justify-between;
+}
+
+.login-checkbox-container {
+    @apply flex items-center;
+}
+
+.login-checkbox {
+    @apply h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded;
+}
+
+.login-checkbox-label {
+    @apply ml-2 block text-sm text-gray-700;
+}
+
+.login-forgot {
+    @apply text-sm text-blue-600 hover:text-blue-700;
+}
+
+/* Submit button */
+.login-button {
+    @apply w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors;
+}
+
+.login-spinner {
+    @apply w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin;
+}
+
+/* Footer */
+.login-footer {
+    @apply mt-6 text-center;
+}
+
+.login-footer-text {
+    @apply text-sm text-gray-600;
+}
+
+.login-footer-link {
+    @apply font-medium text-blue-600 hover:text-blue-700;
+}

@@ -1,0 +1,93 @@
+Resource:
+
+1) Web development:
+
+Youtube Playlist:
+https://www.youtube.com/playlist?list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w
+https://youtube.com/playlist?list=PLfqMhTWNBTe3H6c9OGXb5_6wcc1Mca52n&si=4jFaQbeze-Q_9rnO
+https://youtu.be/nu_pCVPKzTk?si=aaJ-JOxuhmuN0vVR
+
+
+Documentation:
+Frontend:
+HTML:https://developer.mozilla.org/en-US/docs/Web/HTML
+
+CSS:https://developer.mozilla.org/en-US/docs/Web/CSS
+JS:https://devdocs.io/javascript/
+Backend:
+SQL: https://dev.mysql.com/doc/
+https://www.w3schools.com/sql/
+
+NOSQL: https://docs.oracle.com/en/database/other-databases/nosql-database/index.html
+https://www.mongodb.com/resources/basics/databases/nosql-explained
+GIT(Version Control):https://git-scm.com/docs
+
+
+
+Roadmaps:
+https://roadmap.sh/full-stack
+https://www.geeksforgeeks.org/blogs/full-stack-developer-roadmap/
+https://www.guvi.in/blog/full-stack-developer-roadmap/
+https://www.scaler.com/blog/full-stack-developer-roadmap/
+
+Courses:
+https://lp.pwskills.com/Full-Stack-Web-Development-Version2-B?utm_source=google&utm_medium=cpc&utm_campaign=HR-Skills-Full-Stack-WOTP-India-Google-Lead-Search-CPL-Keyword-13-Jan-2024&utm_keyword=fullstack%20developer%20course&utm_adgroupid={adgroupname}&utm_matchtype=p&device=c&gad_source=1&gad_campaignid=21714836104&gbraid=0AAAAA-JkOLyWgc3yr7zK3Xb3HsiQnS9Ma&gclid=Cj0KCQjw3OjGBhDYARIsADd-uX7-qC756kE0IyRPh-cJPXzZqmu1Va_Lp6PEmzL8xa3lG0Nv381hM0gaAgTFEALw_wcB
+
+https://www.coursera.org/professional-certificates/microsoft-full-stack-developer/paidmedia?utm_medium=sem&utm_source=gg&utm_campaign=b2c_india_microsoft-full-stack-developer_microsoft_ftcof_professional-certificates_px_dr_bau_gg_sem_pr_in_all_m_hyb_24-11_x&campaignid=21865493240&adgroupid=169273816466&device=c&keyword=online%20courses%20for%20full%20stack%20development&matchtype=e&network=g&devicemodel=&creativeid=719591888159&assetgroupid=&targetid=kwd-1932955921161&extensionid=&placement=&gad_source=1&gad_campaignid=21865493240&gbraid=0AAAAADdKX6YRBzABD-dTl-ZByz8OwrgT5&gclid=Cj0KCQjw3OjGBhDYARIsADd-uX7c7jy8SdRaN0ZKzYJex2gbrP8-TBNfokqfcSip3hu1WR5vy51wXb4aAohuEALw_wcB&utm_medium=sem&utm_source=gg&utm_campaign=b2c_india_microsoft-full-stack-developer_microsoft_ftcof_professional-certificates_px_dr_bau_gg_sem_pr_in_all_m_hyb_24-11_x&campaignid=21865493240&adgroupid=169273816466&device=c&keyword=online%20courses%20for%20full%20stack%20development&matchtype=e&network=g&devicemodel=&creativeid=719591888159&assetgroupid=&targetid=kwd-1932955921161&extensionid=&placement=&gad_source=1&gad_campaignid=21865493240&gbraid=0AAAAADdKX6YRBzABD-dTl-ZByz8OwrgT5&gclid=Cj0KCQjw3OjGBhDYARIsADd-uX7c7jy8SdRaN0ZKzYJex2gbrP8-TBNfokqfcSip3hu1WR5vy51wXb4aAohuEALw_wcB
+
+
+https://www.udemy.com/topic/full-stack-web-development/?srsltid=AfmBOoqjF0pfS4yow7ujH-4th3a6UgjzFDbJitU9ddpIdPaXPgF08_Ep
+
+https://www.codecademy.com/learn/paths/full-stack-engineer-career-path
+
+https://www.freecodecamp.org/learn/full-stack-developer/
+
+
+2) Python
+
+Youtue Playlist:
+https://youtube.com/playlist?list=PLGjplNEQ1it8-0CmoljS5yeV-GlKSUEt0&si=2sJs3RYv76N98Ffh
+https://youtube.com/playlist?list=PLu0W_9lII9agwh1XjRt242xIpHhPT2llg&si=0pA-H6rtUa3grvtN
+https://youtu.be/rfscVS0vtbw?si=sgrN64uCi8p1ROlz
+
+Documentation:
+https://docs.python.org/3/
+https://www.w3schools.com/python/python_reference.asp
+https://python-docx.readthedocs.io/en/latest/
+
+
+Roadmap:
+https://roadmap.sh/python
+https://www.geeksforgeeks.org/python/best-way-to-start-learning-python-a-complete-roadmap/
+https://www.datacamp.com/blog/python-roadmap
+
+Courses:
+https://developers.google.com/edu/python
+https://www.coursera.org/courses?query=python
+https://www.codecademy.com/catalog/language/python
+
+3) 
+"Topic":"Java",
+Youtube Playlist:
+https://youtu.be/A74TOX803D0?si=2DxXrPv-KPojCLYA
+https://www.youtube.com/playlist?list=PLWKjhJtqVAbnRT_hue-3zyiuIYj0OlpyG
+https://youtube.com/playlist?list=PL9gnSGHSqcnr_DxHsP7AW9ftq0AtAyYqJ&si=1XshbhdxFronfEg2
+https://youtube.com/playlist?list=PLfqMhTWNBTe3LtFWcvwpqTkUSlB32kJop&si=g2MMSodekInGwI0C
+
+Documentation:
+https://docs.oracle.com/en/java/
+https://dev.java/learn/
+https://dev.java/#xd_co_f=MGM5ZDRkZjYtMWRkNS00YTIyLWJhNzMtMzJiMGRmYWNhMDJl~
+
+Roadmap.sh
+https://roadmap.sh/java
+https://www.geeksforgeeks.org/javascript/java-developer-learning-path-a-complete-roadmap/
+https://www.oracle.com/in/java/technologies/java-se-support-roadmap.html
+
+Courses:
+https://www.coursera.org/learn/java-for-programming-beginners
+https://www.codecademy.com/catalog/language/java
+https://education.oracle.com/java/java/pFamily_48
+
+Level:
+Beginner

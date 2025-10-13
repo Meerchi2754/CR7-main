@@ -1,0 +1,135 @@
+/* Signup.css */
+
+/* Layout */
+.signup-container {
+    @apply min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8;
+}
+
+.signup-card {
+    @apply max-w-md w-full bg-white rounded-lg shadow-xl p-8;
+}
+
+/* Headings */
+.signup-header {
+    @apply text-center mb-8;
+}
+
+.signup-title {
+    @apply text-3xl font-bold text-gray-900;
+}
+
+.signup-subtitle {
+    @apply mt-2 text-gray-600;
+}
+
+/* Error box */
+.signup-error {
+    @apply mb-6 bg-red-50 border border-red-200 rounded-md p-4 flex items-start gap-3;
+}
+
+.signup-error-text {
+    @apply text-sm text-red-800;
+}
+
+/* Input fields */
+.signup-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.signup-input-wrapper {
+    @apply relative;
+}
+
+.signup-input-icon {
+    @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
+}
+
+.signup-input {
+    @apply block w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.signup-input-error {
+    @apply border-red-300;
+}
+
+.signup-input-normal {
+    @apply border-gray-300;
+}
+
+.signup-eye-button {
+    @apply absolute inset-y-0 right-0 pr-3 flex items-center;
+}
+
+/* Password strength */
+.password-strength {
+    @apply mt-2;
+}
+
+.password-bar-container {
+    @apply flex items-center gap-2 mb-1;
+}
+
+.password-bar {
+    @apply flex-1 h-2 bg-gray-200 rounded-full overflow-hidden;
+}
+
+.password-text {
+    @apply text-xs font-medium text-gray-600;
+}
+
+/* Password match */
+.password-match {
+    @apply mt-1 text-sm text-green-600 flex items-center gap-1;
+}
+
+.password-error {
+    @apply mt-1 text-sm text-red-600;
+}
+
+/* Terms checkbox */
+.signup-terms {
+    @apply flex items-start;
+}
+
+.signup-checkbox {
+    @apply h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1;
+}
+
+.signup-terms-label {
+    @apply ml-2 block text-sm text-gray-700;
+}
+
+/* Submit button */
+.signup-button {
+    @apply w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors;
+}
+
+.signup-spinner {
+    @apply w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin;
+}
+
+/* Divider */
+.signup-divider {
+    @apply mt-6 relative;
+}
+
+.signup-divider-line {
+    @apply absolute inset-0 flex items-center;
+}
+
+.signup-divider-border {
+    @apply w-full border-t border-gray-300;
+}
+
+/* Footer */
+.signup-footer {
+    @apply mt-6 text-center;
+}
+
+.signup-footer-text {
+    @apply text-sm text-gray-600;
+}
+
+.signup-footer-link {
+    @apply font-medium text-blue-600 hover:text-blue-700;
+}
