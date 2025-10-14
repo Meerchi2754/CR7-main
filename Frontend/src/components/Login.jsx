@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
 import './Login.css';
 
@@ -159,9 +159,12 @@ export function Login() {
                 />
                 Remember me
               </label>
-              <a href="/forgot-password" className="forgot-link">
+              <Link 
+                to="/forgot-password"
+                className="forgot-link"
+              >
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
             {/* Submit Button */}
@@ -182,7 +185,7 @@ export function Login() {
           </form>
 
           <div className="login-footer">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm" style={{ color: '#94A3B8' }}>
               Don't have an account?{' '}
               <a href="/signup" className="signup-link">
                 Sign up for free

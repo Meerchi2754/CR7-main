@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Send, MessageSquare, GraduationCap, BookOpen } from "lucide-react";
 
 const AnimatedBackground = () => (
@@ -53,10 +54,10 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="/" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">Home</a></li>
-              <li><a href="/courses" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">Browse Courses</a></li>
-              <li><a href="/about" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">About Us</a></li>
-              <li><a href="/contact" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">Contact</a></li>
+              <li><Link to="/" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">Home</Link></li>
+              <li><Link to="/courses" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">Browse Courses</Link></li>
+              <li><Link to="/history" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">History</Link></li>
+              <li><Link to="/contact" className="text-slate-400 hover:text-blue-400 transition-colors text-sm">Contact</Link></li>
             </ul>
           </div>
 
@@ -147,17 +148,17 @@ const Contact = () => {
             </div>
 
             <div className="hidden md:flex items-center space-x-8">
-              <a href="/" className="text-slate-400 hover:text-blue-400 transition-colors">Home</a>
-              <a href="/courses" className="text-slate-400 hover:text-blue-400 transition-colors">Browse Courses</a>
-              <a href="/about" className="text-slate-400 hover:text-blue-400 transition-colors">About</a>
-              <a href="/contact" className="text-white hover:text-blue-400 transition-colors font-medium">Contact</a>
+              <Link to="/" className="text-slate-400 hover:text-blue-400 transition-colors">Home</Link>
+              <Link to="/courses" className="text-slate-400 hover:text-blue-400 transition-colors">Browse Courses</Link>
+              <Link to="/history" className="text-slate-400 hover:text-blue-400 transition-colors">History</Link>
+              <Link to="/contact" className="text-white hover:text-blue-400 transition-colors font-medium">Contact</Link>
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
-              <a href="/login" className="text-slate-400 hover:text-blue-400 transition-colors font-medium">Login</a>
-              <a href="/signup" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 transition-colors">
+              <Link to="/login" className="text-slate-400 hover:text-blue-400 transition-colors font-medium">Login</Link>
+              <Link to="/signup" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 transition-colors">
                 Sign Up
-              </a>
+              </Link>
             </div>
           </div>
         </div>
