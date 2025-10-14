@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { BookOpen, GraduationCap, Brain, Award, Search, Star, Clock, ExternalLink, X, TrendingUp, Target, Zap } from "lucide-react";
 import Navigation from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -148,34 +149,41 @@ const sampleQuestions = [
 
 // Animated Background Component
 const AnimatedBackground = () => (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950">
-        <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
-                <div
-                    key={i}
-                    className="absolute rounded-full bg-blue-500/10 blur-3xl animate-float"
-                    style={{
-                        width: `${Math.random() * 400 + 200}px`,
-                        height: `${Math.random() * 400 + 200}px`,
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        animationDelay: `${Math.random() * 10}s`,
-                        animationDuration: `${Math.random() * 20 + 20}s`
-                    }}
-                />
-            ))}
+    <>
+        <div className="fixed inset-0 -z-10 overflow-hidden bg-[#0F172A]">
+            <div className="absolute inset-0">
+                <div className="absolute w-[400px] h-[400px] bg-blue-500 rounded-full blur-[100px] opacity-15 -top-[10%] -left-[10%] animate-float" />
+                <div className="absolute w-[500px] h-[500px] bg-purple-500 rounded-full blur-[100px] opacity-15 -bottom-[15%] -right-[15%] animate-float-delayed" />
+                <div className="absolute w-[350px] h-[350px] bg-cyan-500 rounded-full blur-[100px] opacity-15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-float-more-delayed" />
+            </div>
         </div>
         <style>{`
-      @keyframes float {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        33% { transform: translate(30px, -30px) scale(1.1); }
-        66% { transform: translate(-20px, 20px) scale(0.9); }
-      }
-      .animate-float {
-        animation: float linear infinite;
-      }
-    `}</style>
-    </div>
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                33% { transform: translate(30px, -30px) scale(1.1); }
+                66% { transform: translate(-20px, 20px) scale(0.9); }
+            }
+            @keyframes float-delayed {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                33% { transform: translate(30px, -30px) scale(1.1); }
+                66% { transform: translate(-20px, 20px) scale(0.9); }
+            }
+            @keyframes float-more-delayed {
+                0%, 100% { transform: translate(-50%, -50%) scale(1); }
+                33% { transform: translate(calc(-50% + 30px), calc(-50% - 30px)) scale(1.1); }
+                66% { transform: translate(calc(-50% - 20px), calc(-50% + 20px)) scale(0.9); }
+            }
+            .animate-float {
+                animation: float 20s ease-in-out infinite;
+            }
+            .animate-float-delayed {
+                animation: float-delayed 20s ease-in-out infinite 7s;
+            }
+            .animate-float-more-delayed {
+                animation: float-more-delayed 20s ease-in-out infinite 14s;
+            }
+        `}</style>
+    </>
 );
 
 // Course Card Component
@@ -194,9 +202,9 @@ const CourseCard = ({ course }) => {
     };
 
     return (
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-6 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
+        <div className="bg-[#1E293B] border border-[#475569] backdrop-blur-sm rounded-xl p-6 transition-all duration-300 hover:shadow-xl hover:border-blue-500/50">
             <div className="flex justify-between items-start gap-2 mb-3">
-                <h3 className="text-lg font-semibold text-white leading-tight">{course.title}</h3>
+                <h3 className="text-lg font-semibold leading-tight text-[#E2E8F0]">{course.title}</h3>
                 <span className={`px-2 py-1 rounded text-xs font-medium border ${getLevelColor(course.level)}`}>
                     {course.level}
                 </span>
@@ -228,15 +236,17 @@ const CourseCard = ({ course }) => {
                 <div className="font-semibold text-blue-400">{course.price}</div>
             </div>
 
-            <a
+            <motion.a
                 href={course.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg shadow-blue-500/30"
+                whileHover={{ scale: 1.02, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                whileTap={{ scale: 0.98 }}
             >
                 <ExternalLink className="w-4 h-4" />
                 View Course
-            </a>
+            </motion.a>
         </div>
     );
 };
@@ -307,11 +317,11 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
 
     if (showResult) {
         return (
-            <div className="w-full max-w-2xl mx-auto bg-slate-900 border border-slate-700 rounded-lg shadow-2xl">
+            <div className="w-full max-w-2xl mx-auto bg-[#1E293B] border border-[#475569] rounded-xl shadow-2xl">
                 <div className="p-6">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="flex items-center gap-2 text-2xl font-semibold text-white">
-                            <Award className="w-6 h-6 text-blue-400" />
+                        <h2 className="flex items-center gap-2 text-2xl font-semibold text-[#E2E8F0]">
+                            <Award className="w-6 h-6 text-blue-500" />
                             Test Complete!
                         </h2>
                         <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
@@ -320,7 +330,7 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
                     </div>
 
                     <div className="space-y-6 text-center">
-                        <div className="text-6xl font-bold text-blue-400">
+                        <div className="text-6xl font-bold text-blue-500">
                             {finalScore}/{selectedQuestions.length}
                         </div>
                         <p className="text-lg text-slate-300">
@@ -334,12 +344,14 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
                             </strong>{" "}
                             level courses.
                         </p>
-                        <button
+                        <motion.button
                             onClick={onClose}
-                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors"
+                            className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg shadow-blue-500/30"
+                            whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             Find Courses
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
             </div>
@@ -347,11 +359,11 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
     }
 
     return (
-        <div className="w-full max-w-2xl mx-auto bg-slate-900 border border-slate-700 rounded-lg shadow-2xl">
+        <div className="w-full max-w-2xl mx-auto bg-[#1E293B] border border-[#475569] rounded-xl shadow-2xl">
             <div className="p-6">
                 <div className="mb-4 flex items-center justify-between">
-                    <h3 className="flex items-center gap-2 text-lg font-semibold text-white">
-                        <BookOpen className="w-5 h-5 text-blue-400" />
+                    <h3 className="flex items-center gap-2 text-lg font-semibold text-[#E2E8F0]">
+                        <BookOpen className="w-5 h-5 text-blue-500" />
                         Skill Assessment Test
                     </h3>
                     <div className="flex items-center gap-4">
@@ -364,7 +376,7 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
                     </div>
                 </div>
 
-                <div className="w-full h-2 bg-slate-700 rounded-full mb-6">
+                <div className="w-full h-2 bg-[#475569] rounded-full mb-6">
                     <div
                         className="h-2 bg-blue-500 rounded-full transition-all duration-300"
                         style={{ width: `${progress}%` }}
@@ -373,17 +385,18 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
 
                 <div className="space-y-6">
                     <div>
-                        <h3 className="text-lg font-semibold mb-4 text-white">
+                        <h3 className="text-lg font-semibold mb-4 text-[#E2E8F0]">
                             {selectedQuestions[currentQuestion].question}
                         </h3>
                         <div className="space-y-3">
                             {selectedQuestions[currentQuestion].options.map((option, index) => (
                                 <label
                                     key={index}
-                                    className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border-2 transition-colors ${selectedAnswer === index.toString()
+                                    className={`flex items-center gap-3 cursor-pointer p-3 rounded-xl border-2 transition-all duration-200 ${
+                                        selectedAnswer === index.toString()
                                             ? 'border-blue-500 bg-blue-500/10'
-                                            : 'border-slate-700 hover:border-slate-600 hover:bg-slate-800/50'
-                                        }`}
+                                            : 'border-[#475569] hover:border-slate-600 hover:bg-slate-800/50'
+                                    }`}
                                 >
                                     <input
                                         type="radio"
@@ -391,28 +404,32 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
                                         value={index}
                                         checked={selectedAnswer === index.toString()}
                                         onChange={() => setSelectedAnswer(index.toString())}
-                                        className="w-4 h-4 text-blue-500"
+                                        className="w-4 h-4 text-blue-500 accent-blue-500"
                                     />
-                                    <span className="text-slate-200 flex-1">{option}</span>
+                                    <span className="flex-1 text-[#E2E8F0]">{option}</span>
                                 </label>
                             ))}
                         </div>
                     </div>
 
-                    <div className="flex gap-4 justify-end pt-4 border-t border-slate-700">
-                        <button
+                    <div className="flex gap-4 justify-end pt-4 border-t border-[#475569]">
+                        <motion.button
                             onClick={onClose}
-                            className="px-4 py-2 border border-slate-600 text-slate-300 rounded-md hover:bg-slate-800 transition-colors"
+                            className="px-4 py-2 border border-[#475569] text-slate-300 rounded-xl hover:bg-[#334155] transition-all duration-200"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             Cancel
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button
                             onClick={handleNextQuestion}
                             disabled={selectedAnswer === ""}
-                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold shadow-lg shadow-blue-500/30"
+                            whileHover={selectedAnswer !== "" ? { scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" } : {}}
+                            whileTap={selectedAnswer !== "" ? { scale: 0.95 } : {}}
                         >
                             {currentQuestion === selectedQuestions.length - 1 ? "Finish Test" : "Next Question"}
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
             </div>
@@ -422,11 +439,11 @@ const SkillTest = ({ onTestComplete, onClose, topic }) => {
 
 // Stats Card Component
 const StatsCard = ({ icon: Icon, title, value, color }) => (
-    <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-6 hover:border-blue-500/50 transition-all">
+    <div className="bg-[#1E293B] border border-[#475569] backdrop-blur-sm rounded-xl p-6 transition-all duration-300 hover:border-blue-500/50 hover:shadow-lg">
         <div className={`inline-flex p-3 rounded-lg mb-4 ${color}`}>
             <Icon className="w-6 h-6" />
         </div>
-        <div className="text-3xl font-bold text-white mb-2">{value}</div>
+        <div className="text-3xl font-bold text-[#E2E8F0] mb-2">{value}</div>
         <div className="text-slate-400">{title}</div>
     </div>
 );
@@ -531,14 +548,14 @@ const Home = () => {
             {/* Hero Section */}
             <div className="py-12 px-4">
                 <div className="max-w-4xl mx-auto text-center space-y-6">
-                    <div className="flex items-center justify-center gap-2 text-blue-400 mb-4">
+                    <div className="flex items-center justify-center gap-2 mb-4 text-blue-500">
                         <GraduationCap className="w-8 h-8" />
                         <BookOpen className="w-8 h-8" />
                     </div>
 
                     {userName && (
                         <h2 className="text-2xl font-semibold text-slate-300">
-                            Welcome back, <span className="text-blue-400">{userName}</span>!
+                            Welcome back, <span className="text-blue-500">{userName}</span>!
                         </h2>
                     )}
 
@@ -578,7 +595,7 @@ const Home = () => {
             <div className="py-12 px-4">
                 <div className="max-w-4xl mx-auto">
                     {testResult && (
-                        <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg backdrop-blur-sm">
+                        <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl backdrop-blur-sm">
                             <div className="flex items-center gap-2 text-blue-400 mb-2">
                                 <Award className="w-5 h-5" />
                                 <span className="font-semibold">Test Results Applied</span>
@@ -590,11 +607,11 @@ const Home = () => {
                         </div>
                     )}
 
-                    <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-lg">
+                    <div className="bg-[#1E293B] border border-[#475569] backdrop-blur-sm p-6 rounded-xl">
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                                    <label className="block text-sm font-medium text-[#E2E8F0] mb-2">
                                         What do you want to learn?
                                     </label>
                                     <input
@@ -603,18 +620,18 @@ const Home = () => {
                                         onChange={(e) => setFilters({ ...filters, topic: e.target.value })}
                                         onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                                         placeholder="e.g., React, Python, Machine Learning"
-                                        className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-500"
+                                        className="w-full px-3 py-3 bg-[#334155] text-[#F1F5F9] placeholder-slate-500 border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:bg-[#3f4b5f] transition-all duration-200 shadow-sm"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                                    <label className="block text-sm font-medium text-[#E2E8F0] mb-2">
                                         Your skill level
                                     </label>
                                     <select
                                         value={filters.level}
                                         onChange={(e) => setFilters({ ...filters, level: e.target.value })}
-                                        className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                                        className="w-full px-3 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:bg-[#3f4b5f] transition-all duration-200 shadow-sm"
                                     >
                                         <option value="all">All levels</option>
                                         <option value="beginner">Beginner</option>
@@ -625,38 +642,42 @@ const Home = () => {
                             </div>
 
                             <div className="flex justify-center pt-2">
-                                <button
+                                <motion.button
                                     onClick={handleSearch}
                                     disabled={!filters.topic.trim()}
-                                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium flex items-center gap-2"
+                                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold flex items-center gap-2 shadow-lg shadow-blue-500/30"
+                                    whileHover={filters.topic.trim() ? { scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" } : {}}
+                                    whileTap={filters.topic.trim() ? { scale: 0.95 } : {}}
                                 >
                                     <Search className="w-4 h-4" />
                                     Find Courses
-                                </button>
+                                </motion.button>
                             </div>
                         </div>
                     </div>
 
                     {filters.topic && (
-                        <div className="mt-6 p-6 bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-lg">
-                            <div className="flex items-center justify-center gap-2 text-blue-400 mb-3">
+                        <div className="mt-6 p-6 bg-[#1E293B] border border-[#475569] backdrop-blur-sm rounded-xl">
+                            <div className="flex items-center justify-center gap-2 text-blue-500 mb-3">
                                 <Brain className="w-6 h-6" />
                                 <Award className="w-6 h-6" />
                             </div>
-                            <h2 className="text-xl font-semibold mb-3 text-center">
+                            <h2 className="text-xl font-semibold text-[#E2E8F0] mb-3 text-center">
                                 Test your knowledge in {filters.topic}
                             </h2>
                             <p className="text-slate-300 mb-4 text-center">
                                 Take a quick assessment test to evaluate your current skill level and get better course recommendations.
                             </p>
                             <div className="flex justify-center">
-                                <button
+                                <motion.button
                                     onClick={() => setShowTest(true)}
-                                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-md transition-colors font-semibold flex items-center gap-2"
+                                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl transition-all duration-200 font-semibold flex items-center gap-2 shadow-lg shadow-blue-500/30"
+                                    whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     <Brain className="w-4 h-4" />
                                     Take {filters.topic} Test
-                                </button>
+                                </motion.button>
                             </div>
                         </div>
                     )}
@@ -668,25 +689,27 @@ const Home = () => {
                 <div className="pb-12 px-4">
                     <div className="max-w-6xl mx-auto">
                         <div className="mb-8 text-center">
-                            <div className="bg-slate-900/50 backdrop-blur-sm border border-red-500/30 rounded-lg p-8">
-                                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-500/10 mb-4">
+                            <div className="bg-[#1E293B] border border-red-500/30 backdrop-blur-sm rounded-xl p-8">
+                                <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/10 rounded-full mb-4">
                                     <Search className="w-8 h-8 text-red-400" />
                                 </div>
-                                <h2 className="text-2xl font-semibold mb-2 text-red-400">
+                                <h2 className="text-2xl font-semibold text-red-400 mb-2">
                                     Courses Not Found
                                 </h2>
                                 <p className="text-slate-400 mb-4">
                                     We couldn't find any resources for "{filters.topic}". Try searching for a different topic.
                                 </p>
-                                <button
+                                <motion.button
                                     onClick={() => {
                                         setFilters({ topic: '', level: 'all' });
                                         setHasSearched(false);
                                     }}
-                                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-md transition-colors font-medium"
+                                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl transition-all duration-200 font-semibold shadow-lg shadow-blue-500/30"
+                                    whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     Try Another Search
-                                </button>
+                                </motion.button>
                             </div>
                         </div>
                     </div>

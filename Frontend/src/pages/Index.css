@@ -1,86 +1,232 @@
 /* --------------------------------------------
-   EduVerse — Index Page Styles
-   Clean, minimal animations & gradient effects
+   EduVerse — Index Page Styles (Dark Mode)
+   Consistent with Signup/Login dark theme
 --------------------------------------------- */
 
-/* Page Background Animation */
-body {
-    background: linear-gradient(135deg, #eef2ff, #e0e7ff, #c7d2fe);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-    font-family: 'Inter', sans-serif;
+/* Container */
+.index-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-color: #0F172A;
 }
 
-/* Gradient Animation */
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
+/* Animated Background */
+.index-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
 
-    50% {
-        background-position: 100% 50%;
-    }
+.floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: float 20s ease-in-out infinite;
+}
 
-    100% {
-        background-position: 0% 50%;
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: #3B82F6;
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: #8B5CF6;
+    bottom: -15%;
+    right: -15%;
+    animation-delay: 7s;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: #06B6D4;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 14s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
     }
 }
 
-/* Smooth Fade for Buttons */
-button {
+/* Hero Section */
+.index-hero {
+    max-width: 42rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* Icon Badge */
+.index-icon-badge {
+    padding: 1rem;
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+    background-color: #1E293B;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    border: 1px solid #334155;
+}
+
+/* Title */
+.index-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #E2E8F0;
+    line-height: 1.2;
+}
+
+.index-title-highlight {
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Subtitle */
+.index-subtitle {
+    font-size: 1.125rem;
+    color: #94A3B8;
+    margin-bottom: 2rem;
+    line-height: 1.75;
+    max-width: 36rem;
+}
+
+/* Feature Pills */
+.index-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.feature-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: #1E293B;
+    color: #CBD5E1;
+    border: 1px solid #334155;
     transition: all 0.3s ease;
 }
 
-/* Hover Lift Effect for Buttons */
-button:hover {
+.feature-pill:hover {
+    background-color: #334155;
     transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
-/* Footer Fade-in */
-footer {
-    animation: fadeIn 1s ease 0.5s both;
+/* Buttons */
+.index-button-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: white;
+    background-color: #3B82F6;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.index-button-primary:hover {
+    background-color: #2563EB;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
 }
 
-/* Responsive Text Adjustments */
+.index-button-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #3B82F6;
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.index-button-secondary:hover {
+    background-color: #334155;
+    border-color: #3B82F6;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.index-footer {
+    margin-top: 4rem;
+    font-size: 0.875rem;
+    color: #64748B;
+    position: relative;
+    z-index: 10;
+}
+
+/* Responsive Design */
 @media (max-width: 640px) {
-    h1 {
-        font-size: 2rem !important;
+    .index-title {
+        font-size: 2rem;
     }
 
-    p {
-        font-size: 0.95rem !important;
+    .index-subtitle {
+        font-size: 1rem;
+    }
+
+    .index-container {
+        padding: 2rem 1rem;
+    }
+
+    .feature-pill {
+        font-size: 0.8125rem;
+        padding: 0.4rem 0.875rem;
     }
 }
 
-/* Index.css */
-
-/* Add subtle hover animations */
-button {
-    transition: all 0.25s ease-in-out;
+@media (min-width: 640px) {
+    .index-title {
+        font-size: 3rem;
+    }
 }
 
-button:hover {
-    transform: translateY(-2px);
-}
-
-footer {
-    font-family: 'Inter', sans-serif;
-}
-
-/* Optional: smoother font rendering */
+/* Smooth font rendering */
 body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-family: 'Inter', sans-serif;
 }

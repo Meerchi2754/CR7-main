@@ -119,7 +119,7 @@ export function Signup() {
 
         {serverError && (
           <div className="signup-error">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#F87171' }} />
             <p className="signup-error-text">{serverError}</p>
           </div>
         )}
@@ -132,7 +132,7 @@ export function Signup() {
             </label>
             <div className="signup-input-wrapper">
               <div className="signup-input-icon">
-                <User className="h-5 w-5 text-gray-400" />
+                <User className="h-5 w-5" style={{ color: '#94A3B8' }} />
               </div>
               <input
                 id="name"
@@ -157,7 +157,7 @@ export function Signup() {
             </label>
             <div className="signup-input-wrapper">
               <div className="signup-input-icon">
-                <Mail className="h-5 w-5 text-gray-400" />
+                <Mail className="h-5 w-5" style={{ color: '#94A3B8' }} />
               </div>
               <input
                 id="email"
@@ -182,7 +182,7 @@ export function Signup() {
             </label>
             <div className="signup-input-wrapper">
               <div className="signup-input-icon">
-                <Lock className="h-5 w-5 text-gray-400" />
+                <Lock className="h-5 w-5" style={{ color: '#94A3B8' }} />
               </div>
               <input
                 id="password"
@@ -200,9 +200,9 @@ export function Signup() {
                 className="signup-eye-button"
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  <EyeOff className="h-5 w-5" style={{ color: '#94A3B8' }} />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  <Eye className="h-5 w-5" style={{ color: '#94A3B8' }} />
                 )}
               </button>
             </div>
@@ -232,7 +232,7 @@ export function Signup() {
             </label>
             <div className="signup-input-wrapper">
               <div className="signup-input-icon">
-                <Lock className="h-5 w-5 text-gray-400" />
+                <Lock className="h-5 w-5" style={{ color: '#94A3B8' }} />
               </div>
               <input
                 id="confirmPassword"
@@ -250,9 +250,9 @@ export function Signup() {
                 className="signup-eye-button"
               >
                 {showConfirmPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  <EyeOff className="h-5 w-5" style={{ color: '#94A3B8' }} />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  <Eye className="h-5 w-5" style={{ color: '#94A3B8' }} />
                 )}
               </button>
             </div>

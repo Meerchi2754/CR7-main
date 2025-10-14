@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Trash2, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { BookOpen, Trash2, Eye, Calendar, Sparkles } from 'lucide-react';
 import Navigation from '../components/Navbar';
 import Footer from '../components/Footer';
 import CoursesCard from '../components/CoursesCard';
@@ -93,63 +94,106 @@ const History = () => {
 
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-[#0F172A] flex flex-col">
             <Navigation />
 
-            <div className="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
-                <div className="flex items-center justify-between mb-8">
+            {/* Animated Background */}
+            <div className="fixed inset-0 -z-10 overflow-hidden bg-[#0F172A]">
+                <div className="absolute inset-0">
+                    <div className="absolute w-[400px] h-[400px] bg-blue-500 rounded-full blur-[100px] opacity-15 -top-[10%] -left-[10%] animate-pulse" />
+                    <div className="absolute w-[500px] h-[500px] bg-purple-500 rounded-full blur-[100px] opacity-15 -bottom-[15%] -right-[15%] animate-pulse" style={{ animationDelay: '2s' }} />
+                </div>
+            </div>
+
+            <div className="flex-grow max-w-7xl mx-auto px-4 py-12 w-full relative z-10">
+                {/* Header Section */}
+                <motion.div 
+                    className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">History</h1>
-                        <p className="text-gray-600">View your visited topics</p>
+                        <div className="flex items-center gap-3 mb-2">
+                            <Sparkles className="w-8 h-8 text-blue-500" />
+                            <h1 className="text-4xl font-bold text-[#E2E8F0]">Learning History</h1>
+                        </div>
+                        <p className="text-slate-400">Track your learning journey and revisit topics</p>
                     </div>
 
                     {topicViews.length > 0 && (
-                        <button
+                        <motion.button
                             onClick={clearHistory}
-                            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-red-500/30"
+                            whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(239, 68, 68, 0.4)" }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             <Trash2 className="w-4 h-4" />
                             Clear All
-                        </button>
+                        </motion.button>
                     )}
-                </div>
+                </motion.div>
 
                 {topicViews.length === 0 ? (
-                        <div className="text-center py-16 bg-white rounded-lg shadow-sm">
-                            <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                            <p className="text-gray-600 text-lg mb-2">No topic views yet</p>
-                            <p className="text-gray-500 mb-6">Start exploring topics to build your history!</p>
-                            <button
-                                onClick={() => navigate('/courses')}
-                                className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                        <motion.div 
+                            className="text-center py-20 bg-[#1E293B] border border-[#475569] rounded-xl shadow-xl"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                        >
+                            <BookOpen className="w-20 h-20 text-slate-600 mx-auto mb-6" />
+                            <h3 className="text-2xl font-semibold text-[#E2E8F0] mb-3">No Learning History Yet</h3>
+                            <p className="text-slate-400 mb-8 max-w-md mx-auto">Start exploring topics to build your personalized learning journey!</p>
+                            <motion.button
+                                onClick={() => navigate('/home')}
+                                className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-blue-500/30"
+                                whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                                whileTap={{ scale: 0.95 }}
                             >
                                 Explore Topics
-                            </button>
-                        </div>
+                            </motion.button>
+                        </motion.div>
                     ) : (
-                        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+                        <motion.div 
+                            className="bg-[#1E293B] border border-[#475569] rounded-xl shadow-xl overflow-hidden"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                        >
                             <div className="overflow-x-auto">
                                 <table className="w-full">
-                                    <thead className="bg-gray-50 border-b">
+                                    <thead className="bg-[#0F172A] border-b border-[#475569]">
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
                                                 Topic
                                             </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Date Visited
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                                <div className="flex items-center gap-2">
+                                                    <Calendar className="w-4 h-4" />
+                                                    Date Visited
+                                                </div>
                                             </th>
-                                            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th className="px-6 py-4 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider">
                                                 Actions
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-200">
-                                        {topicViews.map((view) => (
-                                            <tr key={view.id} className="hover:bg-gray-50 transition-colors">
+                                    <tbody className="divide-y divide-[#475569]">
+                                        {topicViews.map((view, index) => (
+                                            <motion.tr 
+                                                key={view.id} 
+                                                className="hover:bg-[#334155] transition-colors"
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ duration: 0.3, delay: index * 0.05 }}
+                                            >
                                                 <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="font-medium text-gray-900">{view.topic}</div>
+                                                    <div className="flex items-center gap-2">
+                                                        <BookOpen className="w-4 h-4 text-blue-400" />
+                                                        <span className="font-semibold text-[#E2E8F0]">{view.topic}</span>
+                                                    </div>
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                                                     {new Date(view.date).toLocaleDateString('en-US', {
                                                         year: 'numeric',
                                                         month: 'short',
@@ -159,26 +203,30 @@ const History = () => {
                                                     })}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <button
+                                                    <motion.button
                                                         onClick={() => handleTopicClick(view.topic)}
-                                                        className="text-blue-600 hover:text-blue-700 mr-4 inline-flex items-center gap-1"
+                                                        className="text-blue-400 hover:text-blue-300 mr-4 inline-flex items-center gap-1 transition-colors"
+                                                        whileHover={{ scale: 1.05 }}
+                                                        whileTap={{ scale: 0.95 }}
                                                     >
                                                         <Eye className="w-4 h-4" />
                                                         View Resources
-                                                    </button>
-                                                    <button
+                                                    </motion.button>
+                                                    <motion.button
                                                         onClick={() => deleteTopicView(view.id)}
-                                                        className="text-red-600 hover:text-red-700"
+                                                        className="text-red-400 hover:text-red-300 transition-colors"
+                                                        whileHover={{ scale: 1.05 }}
+                                                        whileTap={{ scale: 0.95 }}
                                                     >
-                                                        Delete
-                                                    </button>
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </motion.button>
                                                 </td>
-                                            </tr>
+                                            </motion.tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </motion.div>
                     )
                 }
             </div>
