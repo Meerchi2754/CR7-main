@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, LogOut } from "lucide-react";
 
@@ -30,10 +30,11 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <motion.div 
-            className="flex items-center gap-2"
+          <motion.div
+            className="flex items-center gap-2 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            onClick={() => navigate("/home")}
           >
             <div className="flex items-center gap-1 text-blue-500">
               <GraduationCap className="w-6 h-6" />
@@ -44,54 +45,53 @@ export function Navigation() {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <motion.a 
-              href="/home" 
-              className={`${
-                isActive('/home') 
-                  ? 'text-blue-500 font-semibold' 
-                  : 'text-[#E2E8F0] hover:text-blue-400'
-              } transition-colors`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Home
-            </motion.a>
-            <motion.a 
-              href="/courses" 
-              className={`${
-                isActive('/courses') 
-                  ? 'text-blue-500 font-semibold' 
-                  : 'text-slate-300 hover:text-blue-400'
-              } transition-colors`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Browse Courses
-            </motion.a>
-            <motion.a 
-              href="/history" 
-              className={`${
-                isActive('/history') 
-                  ? 'text-blue-500 font-semibold' 
-                  : 'text-slate-300 hover:text-blue-400'
-              } transition-colors`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              History
-            </motion.a>
-            <motion.a 
-              href="/contact" 
-              className={`${
-                isActive('/contact') 
-                  ? 'text-blue-500 font-semibold' 
-                  : 'text-slate-300 hover:text-blue-400'
-              } transition-colors`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact
-            </motion.a>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/home"
+                className={`${isActive("/home")
+                  ? "text-blue-500 font-semibold"
+                  : "text-[#E2E8F0] hover:text-blue-400"
+                  } transition-colors`}
+              >
+                Home
+              </Link>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/courses"
+                className={`${isActive("/courses")
+                  ? "text-blue-500 font-semibold"
+                  : "text-slate-300 hover:text-blue-400"
+                  } transition-colors`}
+              >
+                Browse Courses
+              </Link>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/history"
+                className={`${isActive("/history")
+                  ? "text-blue-500 font-semibold"
+                  : "text-slate-300 hover:text-blue-400"
+                  } transition-colors`}
+              >
+                History
+              </Link>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/contact"
+                className={`${isActive("/contact")
+                  ? "text-blue-500 font-semibold"
+                  : "text-slate-300 hover:text-blue-400"
+                  } transition-colors`}
+              >
+                Contact
+              </Link>
+            </motion.div>
           </div>
 
           {/* Auth Buttons */}
@@ -100,7 +100,11 @@ export function Navigation() {
               <motion.button
                 onClick={handleLogout}
                 className="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-red-500/30"
-                whileHover={{ scale: 1.05, y: -2, boxShadow: "0 10px 25px -5px rgba(239, 68, 68, 0.4)" }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                  boxShadow: "0 10px 25px -5px rgba(239, 68, 68, 0.4)",
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 <LogOut className="w-4 h-4" />
@@ -108,22 +112,22 @@ export function Navigation() {
               </motion.button>
             ) : (
               <>
-                <motion.a
-                  href="/login"
-                  className="text-slate-300 hover:text-blue-400 transition-colors font-medium"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Login
-                </motion.a>
-                <motion.a
-                  href="/signup"
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-blue-500/30"
-                  whileHover={{ scale: 1.05, y: -2, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Sign Up
-                </motion.a>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    to="/login"
+                    className="text-slate-300 hover:text-blue-400 transition-colors font-medium"
+                  >
+                    Login
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    to="/signup"
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-blue-500/30"
+                  >
+                    Sign Up
+                  </Link>
+                </motion.div>
               </>
             )}
           </div>
