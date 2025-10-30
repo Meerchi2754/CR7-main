@@ -9,8 +9,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Courses from "./pages/Courses";
 import History from "./pages/History";
-import Contact from "./components/Contact";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +27,8 @@ const App = () => (
           <Route path="/home" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/history" element={<History />} />
-          <Route path="/contact" element={<Contact />} />
+          {/* Contact route removed */}
+          <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

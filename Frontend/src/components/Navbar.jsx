@@ -81,16 +81,16 @@ export function Navigation() {
               History
             </motion.a>
             <motion.a 
-              href="/contact" 
+              href="/profile" 
               className={`${
-                isActive('/contact') 
+                isActive('/profile') 
                   ? 'text-blue-500 font-semibold' 
                   : 'text-slate-300 hover:text-blue-400'
               } transition-colors`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Contact
+              Profile
             </motion.a>
           </div>
 

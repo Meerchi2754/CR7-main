@@ -8,6 +8,7 @@ const { connectDB } = require("./Database/db_connection");
 const userRouter = require("./routes/userRoutes");
 const resourceRouter = require("./routes/resourceRoutes");
 const historyRouter = require("./routes/historyRoutes");
+const profileRouter = require("./routes/profileRoutes");
 const app = express();
 
 console.log(`[BOOT] process.cwd(): ${process.cwd()}`);
@@ -20,11 +21,21 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Return JSON for payload too large errors
+app.use((err, req, res, next) => {
+  if (err && err.type === 'entity.too.large') {
+    return res.status(413).json({ success: false, message: 'Payload too large' });
+  }
+  next(err);
+});
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/resource", resourceRouter);
 app.use("/api/v1/history", historyRouter);
+app.use("/api/v1/profile", profileRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Full Stack Developer Test API" });
