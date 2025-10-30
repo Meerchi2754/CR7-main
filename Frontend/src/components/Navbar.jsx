@@ -70,6 +70,18 @@ export function Navigation() {
               Browse Courses
             </motion.a>
             <motion.a 
+              href="/profile" 
+              className={`${
+                isActive('/courses') 
+                  ? 'text-blue-500 font-semibold' 
+                  : 'text-slate-300 hover:text-blue-400'
+              } transition-colors`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Profile
+            </motion.a>
+            <motion.a 
               href="/history" 
               className={`${
                 isActive('/history') 
