@@ -241,8 +241,8 @@ export const SkillTest = ({ onTestComplete, onClose, topic }) => {
                                 <label
                                     key={index}
                                     className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border-2 transition-colors ${selectedAnswer === index.toString()
-                                            ? 'border-blue-500 bg-blue-950/30'
-                                            : 'border-border hover:border-muted-foreground hover:bg-accent'
+                                        ? 'border-blue-500 bg-blue-950/30'
+                                        : 'border-border hover:border-muted-foreground hover:bg-accent'
                                         }`}
                                 >
                                     <input

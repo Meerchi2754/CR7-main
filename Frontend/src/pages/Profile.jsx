@@ -11,6 +11,16 @@ import {
   Save,
   AlertCircle,
   CheckCircle2,
+  Briefcase,
+  Calendar,
+  Link2,
+  Github,
+  Linkedin,
+  FileText,
+  Trash2,
+  Lock,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import Navigation from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -27,8 +37,26 @@ const Profile = () => {
     country: "",
     education: "",
     profilePhoto: "",
+    bio: "",
+    occupation: "",
+    dateOfBirth: "",
+    linkedinUrl: "",
+    githubUrl: "",
+    portfolioUrl: "",
   });
   const [previewImage, setPreviewImage] = useState("");
+  const [showPasswordSection, setShowPasswordSection] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+  });
+  const [phoneError, setPhoneError] = useState("");
 
   useEffect(() => {
     // Check if user is logged in
@@ -91,6 +119,42 @@ const Profile = () => {
       [name]: value,
     }));
     setMessage({ type: "", text: "" });
+
+    // Validate phone number
+    if (name === "phone") {
+      validatePhone(value);
+    }
+  };
+
+  const validatePhone = (phone) => {
+    if (!phone) {
+      setPhoneError("");
+      return true;
+    }
+    // Accept international format with + or country code
+    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneError("Please enter a valid phone number");
+      return false;
+    }
+    setPhoneError("");
+    return true;
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleRemovePhoto = () => {
+    setPreviewImage("");
+    setProfileData((prev) => ({
+      ...prev,
+      profilePhoto: "",
+    }));
   };
 
   const handleImageChange = (e) => {
@@ -124,12 +188,75 @@ const Profile = () => {
     }
   };
 
+  const handlePasswordUpdate = async (e) => {
+    e.preventDefault();
+
+    // Validation
+    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+      setMessage({ type: "error", text: "All password fields are required" });
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      setMessage({ type: "error", text: "New password must be at least 6 characters" });
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setMessage({ type: "error", text: "New passwords do not match" });
+      return;
+    }
+
+    try {
+      setSaving(true);
+      const userEmail = localStorage.getItem("userEmail") || sessionStorage.getItem("userEmail");
+
+      const response = await fetch(
+        `http://localhost:3000/api/v1/profile/password/${encodeURIComponent(userEmail)}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            currentPassword: passwordData.currentPassword,
+            newPassword: passwordData.newPassword,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        setMessage({ type: "success", text: "Password updated successfully!" });
+        setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+        setShowPasswordSection(false);
+      } else {
+        setMessage({ type: "error", text: result.message || "Failed to update password" });
+      }
+    } catch (error) {
+      setMessage({ type: "error", text: "Error updating password. Please try again." });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation
     if (!profileData.username.trim()) {
       setMessage({ type: "error", text: "Name is required" });
+      return;
+    }
+
+    // Validate phone if provided
+    if (profileData.phone && !validatePhone(profileData.phone)) {
+      setMessage({ type: "error", text: "Please enter a valid phone number" });
+      return;
+    }
+
+    // Validate bio length
+    if (profileData.bio && profileData.bio.length > 500) {
+      setMessage({ type: "error", text: "Bio must be less than 500 characters" });
       return;
     }
 
@@ -232,11 +359,10 @@ const Profile = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${
-              message.type === "success"
-                ? "bg-green-500/10 border-green-500/30 text-green-400"
-                : "bg-red-500/10 border-red-500/30 text-red-400"
-            }`}
+            className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${message.type === "success"
+              ? "bg-green-500/10 border-green-500/30 text-green-400"
+              : "bg-red-500/10 border-red-500/30 text-red-400"
+              }`}
           >
             {message.type === "success" ? (
               <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
@@ -286,16 +412,26 @@ const Profile = () => {
                     />
                   </label>
                 </div>
-                <div className="text-center md:text-left">
+                <div className="flex-1 text-center md:text-left">
                   <h3 className="text-xl font-semibold text-[#E2E8F0] mb-2">
                     Profile Photo
                   </h3>
                   <p className="text-slate-400 text-sm mb-3">
                     Upload a photo to personalize your profile
                   </p>
-                  <p className="text-slate-500 text-xs">
+                  <p className="text-slate-500 text-xs mb-4">
                     Supported formats: JPG, PNG, GIF (Max 5MB)
                   </p>
+                  {previewImage && (
+                    <button
+                      type="button"
+                      onClick={handleRemovePhoto}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/80 hover:bg-red-600 text-white text-sm rounded-lg transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Remove Photo
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -365,10 +501,19 @@ const Profile = () => {
                     name="phone"
                     value={profileData.phone}
                     onChange={handleInputChange}
-                    className="w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                    placeholder="+1 (555) 123-4567"
+                    className={`w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${phoneError
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                        : "border-transparent focus:border-blue-500 focus:ring-blue-500/20"
+                      }`}
+                    placeholder="+1 234 567 8900"
                   />
                 </div>
+                {phoneError && (
+                  <p className="text-red-400 text-xs mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    {phoneError}
+                  </p>
+                )}
               </div>
 
               {/* Country */}
@@ -381,17 +526,63 @@ const Profile = () => {
                 </label>
                 <div className="relative">
                   <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <input
-                    type="text"
+                  <select
                     id="country"
                     name="country"
                     value={profileData.country}
                     onChange={handleInputChange}
-                    className="w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                    placeholder="United States"
-                  />
+                    className="w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 appearance-none"
+                  >
+                    <option value="">🌍 Select Country</option>
+                    <option value="United States">🇺🇸 United States</option>
+                    <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                    <option value="Canada">🇨🇦 Canada</option>
+                    <option value="Australia">🇦🇺 Australia</option>
+                    <option value="Germany">🇩🇪 Germany</option>
+                    <option value="France">🇫🇷 France</option>
+                    <option value="India">🇮🇳 India</option>
+                    <option value="China">🇨🇳 China</option>
+                    <option value="Japan">🇯🇵 Japan</option>
+                    <option value="South Korea">🇰🇷 South Korea</option>
+                    <option value="Brazil">🇧🇷 Brazil</option>
+                    <option value="Mexico">🇲🇽 Mexico</option>
+                    <option value="Spain">🇪🇸 Spain</option>
+                    <option value="Italy">🇮🇹 Italy</option>
+                    <option value="Netherlands">🇳🇱 Netherlands</option>
+                    <option value="Sweden">🇸🇪 Sweden</option>
+                    <option value="Norway">🇳🇴 Norway</option>
+                    <option value="Denmark">🇩🇰 Denmark</option>
+                    <option value="Finland">🇫🇮 Finland</option>
+                    <option value="Switzerland">🇨🇭 Switzerland</option>
+                    <option value="Austria">🇦🇹 Austria</option>
+                    <option value="Belgium">🇧🇪 Belgium</option>
+                    <option value="Ireland">🇮🇪 Ireland</option>
+                    <option value="Poland">🇵🇱 Poland</option>
+                    <option value="Russia">🇷🇺 Russia</option>
+                    <option value="Singapore">🇸🇬 Singapore</option>
+                    <option value="Malaysia">🇲🇾 Malaysia</option>
+                    <option value="Thailand">🇹🇭 Thailand</option>
+                    <option value="Indonesia">🇮🇩 Indonesia</option>
+                    <option value="Vietnam">🇻🇳 Vietnam</option>
+                    <option value="Philippines">🇵🇭 Philippines</option>
+                    <option value="Pakistan">🇵🇰 Pakistan</option>
+                    <option value="Bangladesh">🇧🇩 Bangladesh</option>
+                    <option value="South Africa">🇿🇦 South Africa</option>
+                    <option value="Nigeria">🇳🇬 Nigeria</option>
+                    <option value="Egypt">🇪🇬 Egypt</option>
+                    <option value="Turkey">🇹🇷 Turkey</option>
+                    <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                    <option value="UAE">🇦🇪 UAE</option>
+                    <option value="Israel">🇮🇱 Israel</option>
+                    <option value="Argentina">🇦🇷 Argentina</option>
+                    <option value="Chile">🇨🇱 Chile</option>
+                    <option value="Colombia">🇨🇴 Colombia</option>
+                    <option value="Peru">🇵🇪 Peru</option>
+                    <option value="New Zealand">🇳🇿 New Zealand</option>
+                  </select>
                 </div>
               </div>
+
 
               {/* Education Background */}
               <div>
@@ -414,6 +605,209 @@ const Profile = () => {
                   />
                 </div>
               </div>
+
+              {/* Bio / About */}
+              <div>
+                <label
+                  htmlFor="bio"
+                  className="block text-sm font-medium text-[#E2E8F0] mb-2"
+                >
+                  Bio / About Me
+                </label>
+                <div className="relative">
+                  <FileText className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    value={profileData.bio}
+                    onChange={handleInputChange}
+                    rows="4"
+                    maxLength="500"
+                    className="w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 resize-none"
+                    placeholder="Tell us about yourself, your interests, and what you're passionate about..."
+                  />
+                </div>
+                <p className="text-slate-500 text-xs mt-1 text-right">
+                  {profileData.bio?.length || 0}/500 characters
+                </p>
+              </div>
+
+              {/* Occupation */}
+              <div>
+                <label
+                  htmlFor="occupation"
+                  className="block text-sm font-medium text-[#E2E8F0] mb-2"
+                >
+                  Occupation / Job Title
+                </label>
+                <div className="relative">
+                  <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    type="text"
+                    id="occupation"
+                    name="occupation"
+                    value={profileData.occupation}
+                    onChange={handleInputChange}
+                    className="w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    placeholder="Software Developer, Student, Data Scientist, etc."
+                  />
+                </div>
+              </div>
+
+              {/* Date of Birth */}
+              <div>
+                <label
+                  htmlFor="dateOfBirth"
+                  className="block text-sm font-medium text-[#E2E8F0] mb-2"
+                >
+                  Date of Birth
+                </label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    type="date"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    value={profileData.dateOfBirth}
+                    onChange={handleInputChange}
+                    className="w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Password Change Section */}
+            <div className="px-8 py-6 border-t border-[#475569] bg-slate-800/30">
+              <button
+                type="button"
+                onClick={() => setShowPasswordSection(!showPasswordSection)}
+                className="flex items-center gap-2 text-[#E2E8F0] hover:text-blue-400 transition-colors font-medium"
+              >
+                <Lock className="w-5 h-5" />
+                {showPasswordSection ? "Hide" : "Change"} Password
+              </button>
+
+              {showPasswordSection && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mt-6 space-y-4"
+                >
+                  <form onSubmit={handlePasswordUpdate}>
+                    {/* Current Password */}
+                    <div className="mb-4">
+                      <label
+                        htmlFor="currentPassword"
+                        className="block text-sm font-medium text-[#E2E8F0] mb-2"
+                      >
+                        Current Password *
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <input
+                          type={showPasswords.current ? "text" : "password"}
+                          id="currentPassword"
+                          name="currentPassword"
+                          value={passwordData.currentPassword}
+                          onChange={handlePasswordChange}
+                          className="w-full pl-11 pr-12 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                          placeholder="Enter current password"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                        >
+                          {showPasswords.current ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* New Password */}
+                    <div className="mb-4">
+                      <label
+                        htmlFor="newPassword"
+                        className="block text-sm font-medium text-[#E2E8F0] mb-2"
+                      >
+                        New Password *
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <input
+                          type={showPasswords.new ? "text" : "password"}
+                          id="newPassword"
+                          name="newPassword"
+                          value={passwordData.newPassword}
+                          onChange={handlePasswordChange}
+                          className="w-full pl-11 pr-12 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                          placeholder="Enter new password (min 6 characters)"
+                          required
+                          minLength="6"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                        >
+                          {showPasswords.new ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div className="mb-4">
+                      <label
+                        htmlFor="confirmPassword"
+                        className="block text-sm font-medium text-[#E2E8F0] mb-2"
+                      >
+                        Confirm New Password *
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <input
+                          type={showPasswords.confirm ? "text" : "password"}
+                          id="confirmPassword"
+                          name="confirmPassword"
+                          value={passwordData.confirmPassword}
+                          onChange={handlePasswordChange}
+                          className="w-full pl-11 pr-12 py-3 bg-[#334155] text-[#F1F5F9] border border-transparent rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                          placeholder="Confirm new password"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                        >
+                          {showPasswords.confirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <motion.button
+                      type="submit"
+                      disabled={saving}
+                      className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={!saving ? { scale: 1.02 } : {}}
+                      whileTap={!saving ? { scale: 0.98 } : {}}
+                    >
+                      {saving ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          Updating...
+                        </>
+                      ) : (
+                        <>
+                          <Lock className="w-5 h-5" />
+                          Update Password
+                        </>
+                      )}
+                    </motion.button>
+                  </form>
+                </motion.div>
+              )}
             </div>
 
             {/* Action Buttons */}
@@ -434,10 +828,10 @@ const Profile = () => {
                 whileHover={
                   !saving
                     ? {
-                        scale: 1.02,
-                        y: -2,
-                        boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)",
-                      }
+                      scale: 1.02,
+                      y: -2,
+                      boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.4)",
+                    }
                     : {}
                 }
                 whileTap={!saving ? { scale: 0.98 } : {}}
