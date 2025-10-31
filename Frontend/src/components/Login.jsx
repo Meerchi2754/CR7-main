@@ -57,18 +57,34 @@ export function Login() {
     setServerError('');
 
     try {
-       // Simulate API call - replace with your actual API endpoint
-       await new Promise(resolve => setTimeout(resolve, 1000));
- 
-       // Store token and user info
-       sessionStorage.setItem('token', 'dummy-token-' + Date.now());
-       sessionStorage.setItem('userName', formData.email.split('@')[0]);
-+      // Persist email for authenticated API usage
-+      localStorage.setItem('userEmail', formData.email);
-+      sessionStorage.setItem('userEmail', formData.email);
- 
-       // Navigate to home page
-       navigate('/home');
+      // Make actual API call to backend
+      const response = await fetch('http://localhost:3000/api/v1/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      // Store token and user info from backend response
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('userId', data.userId);
+      sessionStorage.setItem('userName', formData.email.split('@')[0]);
+      // Persist email for authenticated API usage
+      localStorage.setItem('userEmail', formData.email);
+      sessionStorage.setItem('userEmail', formData.email);
+
+      // Navigate to home page
+      navigate('/home');
 
     } catch (error) {
       setServerError(error.message || 'An error occurred during login');

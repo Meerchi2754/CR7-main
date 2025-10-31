@@ -92,18 +92,52 @@ export function Signup() {
     setServerError('');
 
     try {
-       // Simulate API call - replace with your actual API endpoint
-       await new Promise(resolve => setTimeout(resolve, 1000));
- 
-       // Store token and user info
-       sessionStorage.setItem('token', 'dummy-token-' + Date.now());
-       sessionStorage.setItem('userName', formData.name);
-+      // Persist email for authenticated API usage
-+      localStorage.setItem('userEmail', formData.email);
-+      sessionStorage.setItem('userEmail', formData.email);
- 
-       // Navigate to home page
-       navigate('/home');
+      // Make actual API call to backend
+      const response = await fetch('http://localhost:3000/api/v1/user/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      // Registration successful, now auto-login the user
+      const loginResponse = await fetch('http://localhost:3000/api/v1/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const loginData = await loginResponse.json();
+
+      if (!loginResponse.ok) {
+        throw new Error('Registration successful but auto-login failed. Please login manually.');
+      }
+
+      // Store token and user info from login response
+      sessionStorage.setItem('token', loginData.token);
+      sessionStorage.setItem('userId', loginData.userId);
+      sessionStorage.setItem('userName', formData.name);
+      localStorage.setItem('userEmail', formData.email);
+      sessionStorage.setItem('userEmail', formData.email);
+
+      // Navigate to home page
+      navigate('/home');
 
     } catch (error) {
       setServerError(error.message || 'An error occurred during signup');

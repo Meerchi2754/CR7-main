@@ -502,10 +502,10 @@ const Profile = () => {
                     value={profileData.phone}
                     onChange={handleInputChange}
                     className={`w-full pl-11 pr-4 py-3 bg-[#334155] text-[#F1F5F9] border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${phoneError
-                        ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                        : "border-transparent focus:border-blue-500 focus:ring-blue-500/20"
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                      : "border-transparent focus:border-blue-500 focus:ring-blue-500/20"
                       }`}
-                    placeholder="+1 234 567 8900"
+                    placeholder="+91 902394545424"
                   />
                 </div>
                 {phoneError && (

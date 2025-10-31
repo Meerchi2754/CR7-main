@@ -23,7 +23,13 @@ const getUserProfile = async (req, res) => {
         phone: "",
         country: "",
         education: "",
-        profilePhoto: ""
+        profilePhoto: "",
+        bio: "",
+        occupation: "",
+        dateOfBirth: "",
+        linkedinUrl: "",
+        githubUrl: "",
+        portfolioUrl: ""
       };
 
       return res.status(200).json({
@@ -40,7 +46,13 @@ const getUserProfile = async (req, res) => {
       phone: user.phone || "",
       country: user.country || "",
       education: user.education || "",
-      profilePhoto: user.profilePhoto || ""
+      profilePhoto: user.profilePhoto || "",
+      bio: user.bio || "",
+      occupation: user.occupation || "",
+      dateOfBirth: user.dateOfBirth || "",
+      linkedinUrl: user.linkedinUrl || "",
+      githubUrl: user.githubUrl || "",
+      portfolioUrl: user.portfolioUrl || ""
     };
 
     res.status(200).json({ 
@@ -62,7 +74,7 @@ const getUserProfile = async (req, res) => {
 const updateUserProfile = async (req, res) => {
   try {
     const { email } = req.params;
-    const { username, phone, country, education, profilePhoto } = req.body;
+    const { username, phone, country, education, profilePhoto, bio, occupation, dateOfBirth, linkedinUrl, githubUrl, portfolioUrl } = req.body;
     
     if (!email) {
       return res.status(400).json({ 
@@ -84,8 +96,22 @@ const updateUserProfile = async (req, res) => {
         country: country || "",
         education: education || "",
         profilePhoto: profilePhoto || "",
+        bio: bio || "",
+        occupation: occupation || "",
+        dateOfBirth: dateOfBirth || "",
+        linkedinUrl: linkedinUrl || "",
+        githubUrl: githubUrl || "",
+        portfolioUrl: portfolioUrl || "",
       });
       await user.save();
+    }
+
+    // Validate bio length if provided
+    if (bio !== undefined && bio.length > 500) {
+      return res.status(400).json({
+        success: false,
+        message: "Bio must be less than 500 characters"
+      });
     }
 
     // Update only provided fields
@@ -94,6 +120,12 @@ const updateUserProfile = async (req, res) => {
     if (country !== undefined) user.country = country;
     if (education !== undefined) user.education = education;
     if (profilePhoto !== undefined) user.profilePhoto = profilePhoto;
+    if (bio !== undefined) user.bio = bio;
+    if (occupation !== undefined) user.occupation = occupation;
+    if (dateOfBirth !== undefined) user.dateOfBirth = dateOfBirth;
+    if (linkedinUrl !== undefined) user.linkedinUrl = linkedinUrl;
+    if (githubUrl !== undefined) user.githubUrl = githubUrl;
+    if (portfolioUrl !== undefined) user.portfolioUrl = portfolioUrl;
 
     await user.save();
 
@@ -104,7 +136,13 @@ const updateUserProfile = async (req, res) => {
       phone: user.phone,
       country: user.country,
       education: user.education,
-      profilePhoto: user.profilePhoto
+      profilePhoto: user.profilePhoto,
+      bio: user.bio,
+      occupation: user.occupation,
+      dateOfBirth: user.dateOfBirth,
+      linkedinUrl: user.linkedinUrl,
+      githubUrl: user.githubUrl,
+      portfolioUrl: user.portfolioUrl
     };
 
     res.status(200).json({ 
@@ -122,4 +160,68 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { getUserProfile, updateUserProfile };
+// Update user password
+const updatePassword = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required"
+      });
+    }
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Current password and new password are required"
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must be at least 6 characters"
+      });
+    }
+
+    // Find user with password field
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Current password is incorrect"
+      });
+    }
+
+    // Hash new password and update
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password updated successfully"
+    });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error updating password",
+      error: error.message
+    });
+  }
+};
+
+module.exports = { getUserProfile, updateUserProfile, updatePassword };
