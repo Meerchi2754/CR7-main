@@ -12,10 +12,7 @@ const userSchema = new mongoose.Schema({
     // Additional profile fields
     bio:{type:String,default:"",maxLength:[500,"Bio must be less than 500 characters"]},
     occupation:{type:String,default:""},
-    dateOfBirth:{type:String,default:""},
-    linkedinUrl:{type:String,default:""},
-    githubUrl:{type:String,default:""},
-    portfolioUrl:{type:String,default:""},
+    dateOfBirth:{type:String,default:""}
 })  
 
 const User = mongoose.model("User", userSchema);
