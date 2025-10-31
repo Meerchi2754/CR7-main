@@ -26,10 +26,7 @@ const getUserProfile = async (req, res) => {
         profilePhoto: "",
         bio: "",
         occupation: "",
-        dateOfBirth: "",
-        linkedinUrl: "",
-        githubUrl: "",
-        portfolioUrl: ""
+        dateOfBirth: ""
       };
 
       return res.status(200).json({
